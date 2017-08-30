@@ -1,0 +1,81 @@
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*       BEGAN ATLAS3.9.23 INSTALL OF SECTION 2-1-2 ON 04/15/2010 AT 16:15     *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+
+make[2]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm ; make res/atlas_cacheedge.h pre=d
+make[3]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+make dRunFindCE
+make[4]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make dlib
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make auxillib dcleanuplib dusergemm
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil ; make lib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+make[7]: Nothing to be done for `lib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+cd KERNEL ; make -f dMakefile dlib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[7]: Nothing to be done for `dlib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[6]: Nothing to be done for `dusergemm'.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make -j 8 dlib.grd
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[6]: `dlib.grd' is up to date.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -c -DDREAL -o dfindCE.o /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//tune/blas/gemm/findCE.c
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make ATL_dFindCE_mm.o pre=d typ=DREAL
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -o ATL_dFindCE_mm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL -DFindingCE -I./ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -o xdfindCE dfindCE.o \
+                   /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/ATL_dFindCE_mm.o /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/lib/libatlas.a -lpthread -lm
+/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin/ATLrun.sh /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm xdfindCE -f res/atlas_cacheedge.h
+TA  TB       M       N       K   alpha    beta  CacheEdge       TIME    MFLOPS
+==  ==  ======  ======  ======  ======  ======  =========  =========  ========
+
+ T   N      96    2592   10922    1.00    1.00          0      0.775   7014.59
+ T   N      96    2592   10922    1.00    1.00         32     -2.000      0.00
+ T   N      96    2592   10922    1.00    1.00         64      0.696   7810.80
+ T   N      96    2592   10922    1.00    1.00        128      0.699   7777.27
+ T   N      96    2592   10922    1.00    1.00        256      0.693   7844.60
+ T   N      96    2592   10922    1.00    1.00        512      0.689   7890.15
+ T   N      96    2592   10922    1.00    1.00       1024      0.686   7924.66
+ T   N      96    2592   10922    1.00    1.00       2048      0.686   7924.66
+ T   N      96    2592   10922    1.00    1.00       4096      0.713   7624.56
+ T   N      96    2592   10922    1.00    1.00       8192      0.776   7005.56
+
+Initial CE=2048KB, mflop=7924.66
+
+ T   N      96    2592   10922    1.00    1.00       1536      0.684   7947.83
+ T   N      96    2592   10922    1.00    1.00       1280      0.685   7936.22
+ T   N      96    2592   10922    1.00    1.00       1792      0.686   7924.65
+
+Best CE=1536KB, mflop=7947.83
+cp -f res/atlas_cacheedge.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/atlas_cacheedge.h
+make[4]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+make[3]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm/res/atlas_cacheedge.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm/res/atlas_cacheedge.h INSTALL_LOG/.
+make[2]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*      FINISHED ATLAS3.9.23 INSTALL OF SECTION 2-1-2 ON 04/15/2010 AT 16:15   *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+

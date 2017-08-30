@@ -1,0 +1,235 @@
+########################################################################
+#  
+#  -- Automatically Tuned Linear Algebra Software (ATLAS)
+#     (C) Copyright 2000 All Rights Reserved
+#
+########################################################################
+#
+#  -- Copyright notice and Licensing terms:
+#
+#  Redistribution  and  use in  source and binary forms, with or without
+#  modification, are  permitted provided  that the following  conditions
+#  are met:
+#
+#  1. Redistributions  of  source  code  must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce  the above copyright
+#     notice,  this list of conditions, and the  following disclaimer in
+#     the documentation and/or other materials provided with the distri-
+#     bution.
+#  3. The name of the University,  the ATLAS group,  or the names of its
+#     contributors  may not be used to endorse or promote products deri-
+#     ved from this software without specific written permission.
+#
+#  -- Disclaimer:
+#
+#  THIS  SOFTWARE  IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+#  ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,  INCLUDING,  BUT NOT
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY
+#  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT, INCIDENTAL, SPE-
+#  CIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+#  TO,  PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+#  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEO-
+#  RY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (IN-
+#  CLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+#  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  
+########################################################################
+#
+include Make.inc
+mySRCdir = $(SRCdir)/src/pthreads/blas/level1
+#
+########################################################################
+#
+INC1dep   = \
+   $(INCAdir)/atlas_pthreads.h     $(INCSdir)/atlas_aux.h     \
+   $(INCSdir)/atlas_misc.h      $(INCSdir)/atlas_level1.h  \
+   $(INCSdir)/atlas_ptmisc.h    $(INCSdir)/atlas_ptlvl1.h  \
+   $(INCSdir)/atlas_ptlevel1.h
+#
+## Object files ########################################################
+#
+ATL_slvl1obj = \
+   ATL_sptrotg.o ATL_sptrotmg.o ATL_sptnrm2.o ATL_sptasum.o ATL_sptscal.o \
+   ATL_isptamax.o ATL_sptaxpy.o ATL_sptcopy.o ATL_sptswap.o ATL_sptrot.o \
+   ATL_sptrotm.o ATL_sptdot.o ATL_dsptdot.o ATL_sdsptdot.o
+#
+ATL_dlvl1obj = \
+   ATL_dptrotg.o ATL_dptrotmg.o ATL_dptnrm2.o ATL_dptasum.o ATL_dptscal.o \
+   ATL_idptamax.o ATL_dptaxpy.o ATL_dptcopy.o ATL_dptswap.o ATL_dptrot.o \
+   ATL_dptrotm.o ATL_dptdot.o
+#
+ATL_clvl1obj = \
+   ATL_cptrotg.o ATL_scptnrm2.o ATL_scptasum.o ATL_cptscal.o ATL_csptscal.o \
+   ATL_icptamax.o ATL_cptaxpy.o ATL_cptcopy.o ATL_cptswap.o ATL_csptrot.o \
+   ATL_cptdotc.o ATL_cptdotu.o
+#
+ATL_zlvl1obj = \
+   ATL_zptrotg.o ATL_dzptnrm2.o ATL_dzptasum.o ATL_zptscal.o ATL_zdptscal.o \
+   ATL_izptamax.o ATL_zptaxpy.o ATL_zptcopy.o ATL_zptswap.o ATL_zdptrot.o \
+   ATL_zptdotc.o ATL_zptdotu.o
+#
+## Targets #############################################################
+#
+all   : lib
+#
+lvl2  : lib
+#
+lib   : dlib slib zlib clib
+#
+slvl2 : slib
+dlvl2 : dlib
+clvl2 : clib
+zlvl2 : zlib
+#
+slib  : slib.grd
+dlib  : dlib.grd
+clib  : clib.grd
+zlib  : zlib.grd
+#
+slib.grd  : $(ATL_slvl1obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_slvl1obj)
+	$(RANLIB) $(ATLASlib)
+	touch slib.grd
+#
+dlib.grd  : $(ATL_dlvl1obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_dlvl1obj)
+	$(RANLIB) $(ATLASlib)
+	touch dlib.grd
+#
+clib.grd  : $(ATL_clvl1obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_clvl1obj)
+	$(RANLIB) $(ATLASlib)
+	touch clib.grd
+#
+zlib.grd  : $(ATL_zlvl1obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_zlvl1obj)
+	$(RANLIB) $(ATLASlib)
+	touch zlib.grd
+#
+########################################################################
+#
+ATL_sptrotg.o                : $(mySRCdir)/ATL_ptrotg.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptrotg.c
+ATL_sptrotmg.o               : $(mySRCdir)/ATL_ptrotmg.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptrotmg.c
+ATL_sptscal.o                : $(mySRCdir)/ATL_ptscal.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptscal.c
+ATL_sptnrm2.o                : $(mySRCdir)/ATL_ptnrm2.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptnrm2.c
+ATL_sptasum.o                : $(mySRCdir)/ATL_ptasum.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptasum.c
+ATL_isptamax.o               : $(mySRCdir)/ATL_ptamax.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptamax.c
+ATL_sptaxpy.o                : $(mySRCdir)/ATL_ptaxpy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptaxpy.c
+ATL_sptcopy.o                : $(mySRCdir)/ATL_ptcopy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptcopy.c
+ATL_sptswap.o                : $(mySRCdir)/ATL_ptswap.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptswap.c
+ATL_sptrot.o                 : $(mySRCdir)/ATL_ptrot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptrot.c
+ATL_sptrotm.o                : $(mySRCdir)/ATL_ptrotm.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptrotm.c
+ATL_sptdot.o                 : $(mySRCdir)/ATL_ptdot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptdot.c
+ATL_dsptdot.o                : $(mySRCdir)/ATL_dsptdot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_dsptdot.c
+ATL_sdsptdot.o               : $(mySRCdir)/ATL_sdsptdot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_sdsptdot.c
+#
+ATL_dptrotg.o                : $(mySRCdir)/ATL_ptrotg.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptrotg.c
+ATL_dptrotmg.o               : $(mySRCdir)/ATL_ptrotmg.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptrotmg.c
+ATL_dptscal.o                : $(mySRCdir)/ATL_ptscal.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptscal.c
+ATL_dptnrm2.o                : $(mySRCdir)/ATL_ptnrm2.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptnrm2.c
+ATL_dptasum.o                : $(mySRCdir)/ATL_ptasum.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptasum.c
+ATL_idptamax.o               : $(mySRCdir)/ATL_ptamax.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptamax.c
+ATL_dptaxpy.o                : $(mySRCdir)/ATL_ptaxpy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptaxpy.c
+ATL_dptcopy.o                : $(mySRCdir)/ATL_ptcopy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptcopy.c
+ATL_dptswap.o                : $(mySRCdir)/ATL_ptswap.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptswap.c
+ATL_dptrot.o                 : $(mySRCdir)/ATL_ptrot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptrot.c
+ATL_dptrotm.o                : $(mySRCdir)/ATL_ptrotm.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptrotm.c
+ATL_dptdot.o                 : $(mySRCdir)/ATL_ptdot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptdot.c
+#
+ATL_cptrotg.o                : $(mySRCdir)/ATL_ptrotg.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptrotg.c
+ATL_cptscal.o                : $(mySRCdir)/ATL_ptscal.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptscal.c
+ATL_csptscal.o               : $(mySRCdir)/ATL_ptrscal.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptrscal.c
+ATL_scptnrm2.o               : $(mySRCdir)/ATL_ptnrm2.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptnrm2.c
+ATL_scptasum.o               : $(mySRCdir)/ATL_ptasum.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptasum.c
+ATL_icptamax.o               : $(mySRCdir)/ATL_ptamax.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptamax.c
+ATL_cptaxpy.o                : $(mySRCdir)/ATL_ptaxpy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptaxpy.c
+ATL_cptcopy.o                : $(mySRCdir)/ATL_ptcopy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptcopy.c
+ATL_cptswap.o                : $(mySRCdir)/ATL_ptswap.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptswap.c
+ATL_csptrot.o                : $(mySRCdir)/ATL_ptrot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptrot.c
+ATL_cptdotc.o                : $(mySRCdir)/ATL_ptdotc.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptdotc.c
+ATL_cptdotu.o                : $(mySRCdir)/ATL_ptdotu.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptdotu.c
+#
+ATL_zptrotg.o                : $(mySRCdir)/ATL_ptrotg.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptrotg.c
+ATL_zptscal.o                : $(mySRCdir)/ATL_ptscal.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptscal.c
+ATL_zdptscal.o               : $(mySRCdir)/ATL_ptrscal.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptrscal.c
+ATL_dzptnrm2.o               : $(mySRCdir)/ATL_ptnrm2.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptnrm2.c
+ATL_dzptasum.o               : $(mySRCdir)/ATL_ptasum.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptasum.c
+ATL_izptamax.o               : $(mySRCdir)/ATL_ptamax.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptamax.c
+ATL_zptaxpy.o                : $(mySRCdir)/ATL_ptaxpy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptaxpy.c
+ATL_zptcopy.o                : $(mySRCdir)/ATL_ptcopy.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptcopy.c
+ATL_zptswap.o                : $(mySRCdir)/ATL_ptswap.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptswap.c
+ATL_zdptrot.o                : $(mySRCdir)/ATL_ptrot.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptrot.c
+ATL_zptdotc.o                : $(mySRCdir)/ATL_ptdotc.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptdotc.c
+ATL_zptdotu.o                : $(mySRCdir)/ATL_ptdotu.c $(INC1dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptdotu.c
+#
+########################################################################
+#
+sclean           :
+	rm -f $(ATL_slvl1obj) s*.grd
+#
+dclean           :
+	rm -f $(ATL_dlvl1obj) d*.grd
+#
+cclean           :
+	rm -f $(ATL_clvl1obj) c*.grd
+#
+zclean           :
+	rm -f $(ATL_zlvl1obj) z*.grd
+#
+#
+clean            :
+	rm -f *.o *.grd
+#
+########################################################################

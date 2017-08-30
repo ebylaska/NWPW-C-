@@ -1,0 +1,47 @@
+include Make.inc
+
+MVNCC = $(DKC)
+MVNFLAGS = $(CDEFS) $(DKCFLAGS) -DDREAL
+MVTCC = $(DKC)
+MVTFLAGS = $(CDEFS) $(DKCFLAGS) -DDREAL
+MVSCC = $(DKC)
+MVSFLAGS = $(CDEFS) $(DKCFLAGS) -DDREAL -DATL_NOL1PREFETCH -DATL_NOL2PREFETCH
+
+
+obj = \
+      ATL_dgemvN_b0.o ATL_dgemvN_b1.o ATL_dgemvN_bX.o \
+      ATL_dgemvT_b0.o ATL_dgemvT_b1.o ATL_dgemvT_bX.o \
+      ATL_dgemvS_b0.o ATL_dgemvS_b1.o ATL_dgemvS_bX.o 
+
+dlib : lib
+lib : dmvk.grd
+dmvk.grd : $(obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(obj)
+	$(RANLIB) $(ATLASlib)
+	touch dmvk.grd
+
+clean :
+	 rm -f $(obj) dmvk.grd
+dclean : clean
+
+ATL_dgemvN_b0.o : ATL_dgemvN.c
+	$(MVNCC) -o $@ -c $(MVNFLAGS) -DBETA0 -DALPHA1 ATL_dgemvN.c
+ATL_dgemvN_b1.o : ATL_dgemvN.c
+	$(MVNCC) -o $@ -c $(MVNFLAGS) -DBETA1 -DALPHA1 ATL_dgemvN.c
+ATL_dgemvN_bX.o : ATL_dgemvN.c
+	$(MVNCC) -o $@ -c $(MVNFLAGS) -DBETAX -DALPHA1 ATL_dgemvN.c
+ATL_dgemvT_b0.o : ATL_dgemvT.c
+	$(MVTCC) -o $@ -c $(MVTFLAGS) -DBETA0 -DALPHA1 ATL_dgemvT.c
+ATL_dgemvT_b1.o : ATL_dgemvT.c
+	$(MVTCC) -o $@ -c $(MVTFLAGS) -DBETA1 -DALPHA1 ATL_dgemvT.c
+ATL_dgemvT_bX.o : ATL_dgemvT.c
+	$(MVTCC) -o $@ -c $(MVTFLAGS) -DBETAX -DALPHA1 ATL_dgemvT.c
+ATL_dgemvS_b0.o : ATL_dgemvS.c
+	$(MVSCC) -o $@ -c $(MVSFLAGS) -DBETA0 -DALPHA1  -DATL_dgemvN_a1_x1_b0_y1=ATL_dgemvS_a1_x1_b0_y1  \
+                 ATL_dgemvS.c
+ATL_dgemvS_b1.o : ATL_dgemvS.c
+	$(MVSCC) -o $@ -c $(MVSFLAGS) -DBETA1 -DALPHA1  -DATL_dgemvN_a1_x1_b1_y1=ATL_dgemvS_a1_x1_b1_y1  \
+                 ATL_dgemvS.c
+ATL_dgemvS_bX.o : ATL_dgemvS.c
+	$(MVSCC) -o $@ -c $(MVSFLAGS) -DBETAX -DALPHA1  -DATL_dgemvN_a1_x1_bX_y1=ATL_dgemvS_a1_x1_bX_y1  \
+                 ATL_dgemvS.c

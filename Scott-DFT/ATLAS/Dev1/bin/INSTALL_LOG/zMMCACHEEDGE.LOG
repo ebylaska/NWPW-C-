@@ -1,0 +1,111 @@
+make[2]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm ; make res/atlas_zdNKB.h
+make[3]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+make zdRunFindCE
+make[4]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make zlib
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make auxillib zcleanuplib zusergemm
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil ; make lib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+make[7]: Nothing to be done for `lib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+cd KERNEL ; make -f zMakefile zlib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[7]: Nothing to be done for `zlib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[6]: Nothing to be done for `zusergemm'.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make -j 8 zlib.grd
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[6]: `zlib.grd' is up to date.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make dlib
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make auxillib dcleanuplib dusergemm
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil ; make lib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+make[7]: Nothing to be done for `lib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+cd KERNEL ; make -f dMakefile dlib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[7]: Nothing to be done for `dlib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[6]: Nothing to be done for `dusergemm'.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make -j 8 dlib.grd
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -o ATL_dgemm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL -DATLGEMM -I./ \
+              /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+gcc -o ATL_dgemmNN.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DNoTransA_ -DNoTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemmXX.c
+gcc -o ATL_dgemmNT.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DNoTransA_ -DTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemmXX.c
+gcc -o ATL_dgemmTN.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DTransA_ -DNoTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemmXX.c
+gcc -o ATL_dgemmTT.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DTransA_ -DTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemmXX.c
+gcc -o ATL_dNCmmIJK.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL   /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_NCmmIJK.c
+gcc -o ATL_dNCmmJIK.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL   /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_NCmmJIK.c
+gcc -o ATL_dNCmmIJK_c.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL   /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_NCmmIJK_c.c
+gcc -o ATL_dNCmmJIK_c.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL   /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_NCmmJIK_c.c
+gcc -o ATL_daliased_gemm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL -DALIASED_GEMM -I./ \
+              /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+gcc -o ATL_dAgemmNN.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DNoTransA_ -DNoTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_AgemmXX.c
+gcc -o ATL_dAgemmNT.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DNoTransA_ -DTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_AgemmXX.c
+gcc -o ATL_dAgemmTN.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DTransA_ -DNoTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_AgemmXX.c
+gcc -o ATL_dAgemmTT.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL \
+              -DTransA_ -DTransB_ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_AgemmXX.c
+gcc -o ATL_dsmallK_mm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL -DSMALLK_MM -I./ \
+              /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+gcc -o ATL_dsmall_mm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL -DSMALL_MM -I./ \
+              /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+gcc -o ATL_dbig_mm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL -DBIG_MM -I./ \
+              /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+gcc -o ATL_dbignork_mm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDREAL -DBIGNORK_MM -I./ \
+              /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+ar r /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/lib/libatlas.a ATL_dMBJBmm.o ATL_dIBNBmm.o ATL_dIBJBmm.o ATL_dgemm.o ATL_dGetNB.o ATL_dGetNCNB.o ATL_dgemmNN.o ATL_dgemmNT.o ATL_dgemmTN.o ATL_dgemmTT.o ATL_dNCmmIJK.o ATL_dNCmmJIK.o ATL_dNCmmIJK_c.o ATL_dNCmmJIK_c.o ATL_daliased_gemm.o ATL_dAgemmNN.o ATL_dAgemmNT.o ATL_dAgemmTN.o ATL_dAgemmTT.o ATL_dmmJIK.o ATL_dmmIJK.o ATL_dmmJKI.o ATL_dmmK.o ATL_dmmBPP.o ATL_dmmJITcp.o ATL_dcol2blk_aX.o ATL_drow2blkT_aX.o ATL_dcol2blk_a1.o ATL_drow2blkT_a1.o ATL_dputblk_bX.o ATL_dputblk_b1.o ATL_dputblk_bn1.o ATL_dputblk_b0.o
+echo /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/lib/libatlas.a
+/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/lib/libatlas.a
+touch dlib.grd
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -c -DDCPLX -DATL_JITcp -o zdfindCE.o /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//tune/blas/gemm/findCE.c
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make ATL_zdFindCE_mm.o typ=DCPLX
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -o ATL_zdFindCE_mm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DDCPLX -DFindingJITCPCE -I./ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -o xzdfindCE zdfindCE.o \
+                   /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/ATL_zdFindCE_mm.o /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/lib/libatlas.a -lpthread -lm
+/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin/ATLrun.sh /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm xzdfindCE -f res/atlas_zdNKB.h
+TA TB      M      N      K    alpha       beta     CacheEdge      TIME   MFLOPS
+== == ====== ====== ====== ===== ===== ===== ===== ========= ========= ========
+
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0         0     3.292  6690.20
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0        64    -2.000     0.00
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0       128     3.303  6667.92
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0       256     3.300  6673.99
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0       512     3.264  6749.64
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0      1024     2.850  7730.11
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0      2048     2.855  7716.58
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0      4096     2.853  7721.98
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0      8192     2.856  7713.87
+
+Initial CE=1024KB, mflop=7730.11
+
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0       768     2.855  7716.58
+ T  N    104   5252   5041   1.0   0.0   1.0   0.0      1536     2.851  7727.40
+
+Best CE=1024KB, mflop=7730.11
+cp -f res/atlas_zdNKB.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+make[4]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+make[3]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm/res/atlas_zdNKB.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm/res/atlas_zdNKB.h INSTALL_LOG/.
+make[2]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'

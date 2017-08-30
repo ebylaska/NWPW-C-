@@ -1,0 +1,76 @@
+make[2]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm ; make res/atlas_csNKB.h
+make[3]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+make csRunFindCE
+make[4]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make clib
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make auxillib ccleanuplib cusergemm
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil ; make lib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+make[7]: Nothing to be done for `lib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+cd KERNEL ; make -f cMakefile clib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[7]: Nothing to be done for `clib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[6]: Nothing to be done for `cusergemm'.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make -j 8 clib.grd
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[6]: `clib.grd' is up to date.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make slib
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make auxillib scleanuplib susergemm
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil ; make lib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+make[7]: Nothing to be done for `lib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/auxil'
+cd KERNEL ; make -f sMakefile slib
+make[7]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[7]: Nothing to be done for `slib'.
+make[7]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/KERNEL'
+make[6]: Nothing to be done for `susergemm'.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make -j 8 slib.grd
+make[6]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[6]: `slib.grd' is up to date.
+make[6]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -c -DSCPLX -DATL_JITcp -o csfindCE.o /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//tune/blas/gemm/findCE.c
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm ; make ATL_csFindCE_mm.o typ=SCPLX
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -o ATL_csFindCE_mm.o -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -DSCPLX -DFindingJITCPCE -I./ /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//src/blas/gemm/ATL_gemm.c
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm'
+gcc -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64 -o xcsfindCE csfindCE.o \
+                   /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/gemm/ATL_csFindCE_mm.o /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/lib/libatlas.a -lpthread -lm
+/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin/ATLrun.sh /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm xcsfindCE -f res/atlas_csNKB.h
+TA TB      M      N      K    alpha       beta     CacheEdge      TIME   MFLOPS
+== == ====== ====== ====== ===== ===== ===== ===== ========= ========= ========
+
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0         0     1.470 14792.02
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0        64    -2.000     0.00
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0       128     1.472 14771.90
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0       256     1.468 14812.16
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0       512     1.465 14842.50
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0      1024     1.468 14812.17
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0      2048     1.471 14781.95
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0      4096     1.472 14771.91
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0      8192     1.473 14761.88
+
+Initial CE=512KB, mflop=14842.50
+
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0       384     1.468 14812.16
+ T  N    144   2592   7281   1.0   0.0   1.0   0.0       768     1.470 14792.02
+
+Best CE=512KB, mflop=14842.50
+cp -f res/atlas_csNKB.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+make[4]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+make[3]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm'
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm/res/atlas_csNKB.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/gemm/res/atlas_csNKB.h INSTALL_LOG/.
+make[2]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'

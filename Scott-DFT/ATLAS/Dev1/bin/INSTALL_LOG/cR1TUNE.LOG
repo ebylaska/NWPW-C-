@@ -1,0 +1,143 @@
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*       BEGAN ATLAS3.9.23 INSTALL OF SECTION 2-4-7 ON 04/15/2010 AT 16:22     *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+
+make[2]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger ; make res/cR1SUMM pre=c
+make[3]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+./xr1ksearch -p c
+
+      Read in L1 Cache size as = 32KB.
+
+Cases read in:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=2 ROUT='ATL_cgerk_2x1p.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=2 \
+   LDAMUL=0 FYU=0 X87=0 
+
+BEGIN BASIC KERNEL TESTS:
+   Kernel ATL_cgerk_axpy.c(1) passes basic test
+   Kernel ATL_cgerk_2x1p.c(2) passes basic test
+DONE BASIC KERNEL TESTS:
+
+
+Surviving cases:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=2 ROUT='ATL_cgerk_2x1p.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=2 \
+   LDAMUL=0 FYU=0 X87=0 
+
+BEGIN L1-BLOCKED TUNING
+   1:ATL_cgerk_axpy.c gets 5290.95 MFLOPS
+   2:ATL_cgerk_2x1p.c gets 3527.15 MFLOPS
+DONE L1-BLOCKED TUNING, CHOSE 'ATL_cgerk_axpy.c' (5290.95)
+     M       N     lda  percL1       mflop
+======  ======  ======  ======  ==========
+  2300    2300    2300      50    5291.61
+  2300    2300    2300     100    6046.91
+  2300    2300    2300      74    6046.91
+  2300    2300    2300      62    5290.95
+  2300    2300    2300      56    6046.91
+  2300    2300    2300      52    6046.91
+  2300    2300    2300      54    6046.91
+  2300    2300    2300      58    6046.91
+  2300    2300    2300      60    6046.91
+  2300    2300    2300      68    6046.91
+  2300    2300    2300      64    5290.95
+  2300    2300    2300      66    6046.91
+  2300    2300    2300      70    6046.91
+  2300    2300    2300      72    6046.91
+  2300    2300    2300      86    6046.91
+  2300    2300    2300      80    6046.91
+  2300    2300    2300      76    6046.91
+  2300    2300    2300      78    5290.95
+  2300    2300    2300      82    5291.61
+  2300    2300    2300      84    5290.95
+  2300    2300    2300      92    5291.61
+  2300    2300    2300      88    5290.95
+  2300    2300    2300      90    5290.95
+  2300    2300    2300      96    6046.91
+  2300    2300    2300      94    5290.95
+  2300    2300    2300      98    6046.91
+
+BEST CASE 52 percent of L1, MFLOP=6046.91
+
+
+BEGIN L2-BLOCKED TUNING
+   1:ATL_cgerk_axpy.c gets 6046.91 MFLOPS
+   2:ATL_cgerk_2x1p.c gets 3527.45 MFLOPS
+DONE L2-BLOCKED TUNING, CHOSE 'ATL_cgerk_axpy.c' (6046.91)
+     M       N     lda  percL1       mflop
+======  ======  ======  ======  ==========
+  2300    2300    2300     150    5290.95
+  2300    2300    2300     800    6047.77
+  2300    2300    2300     450    5290.95
+  2300    2300    2300     300    6046.91
+  2300    2300    2300     200    5290.95
+  2300    2300    2300     250    6046.91
+  2300    2300    2300     350    6046.91
+  2300    2300    2300     400    6046.91
+  2300    2300    2300     600    5290.95
+  2300    2300    2300     500    6046.91
+  2300    2300    2300     550    5291.61
+  2300    2300    2300     700    6046.91
+  2300    2300    2300     650    4703.52
+  2300    2300    2300     750    6046.91
+
+BEST CASE 800 percent of L1, MFLOP=6047.77
+
+BEST L1-blocked kernel:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=2129 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=6.046907e+03
+BEST L2-blocked kernel:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=32768 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 \
+   XU=16 LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=6.047771e+03,6.046907e+03
+make cinstall
+make[4]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+mkdir cr1outd
+rm -f cr1outd/*
+if [ -s "/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/Make_cr1" ]; then \
+           cd  /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger ; make -f Make_cr1 killall ; \
+           rm -f /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/Make_cr1 ; \
+        fi
+./xr1hgen -p c -F res/cR1SUMM -d cr1outd
+cp -f cr1outd/Make_cr1 /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/.
+cp cr1outd/*.c /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/.
+cp -f cr1outd/*.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+if [ -s "xccobj.exe" ] ; then \
+	   cp -f xccobj.exe /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/. ; \
+	elif [ -s "xccobj" ]; then \
+           cp -f xccobj /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/. ; \
+        fi
+touch /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/atlas_r1.h
+rm -f cr1outd/* ; rmdir cr1outd
+make[4]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+make[3]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger/res/cR1SUMM INSTALL_LOG/.
+make[2]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*      FINISHED ATLAS3.9.23 INSTALL OF SECTION 2-4-7 ON 04/15/2010 AT 16:23   *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+

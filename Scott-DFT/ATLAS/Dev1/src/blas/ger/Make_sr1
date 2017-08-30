@@ -1,0 +1,30 @@
+#
+#  This file generated at line 738 of /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//tune/blas/ger/r1hgen.c
+#
+include Make.inc
+
+R1CC = $(SKC)
+R1FLAGS = $(CDEFS) $(SKCFLAGS) -DSREAL
+
+obj = ATL_sgerk_L0.o ATL_sgerk_L1.o
+lib : slib
+slib : sr1k.grd
+sr1k.grd : $(obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(obj)
+	$(RANLIB) $(ATLASlib)
+	touch sr1k.grd
+sclean : clean
+clean :
+	rm -f $(obj) sr1k.grd
+
+skilllib : killlib
+killlib : 
+	$(ARCHIVER) d $(ATLASlib) $(obj)
+	$(RANLIB) $(ATLASlib)
+killall : killlib clean
+	 rm -f ATL_sgerk_L0.c ATL_sgerk_L1.c
+
+ATL_sgerk_L0.o : ATL_sgerk_L0.c
+	 $(R1CC) -o ATL_sgerk_L0.o -c -DATL_UGERK=ATL_sgerk_L0 $(R1FLAGS) ATL_sgerk_L0.c
+ATL_sgerk_L1.o : ATL_sgerk_L1.c
+	 $(R1CC) -o ATL_sgerk_L1.o -c -DATL_UGERK=ATL_sgerk_L1 $(R1FLAGS) ATL_sgerk_L1.c

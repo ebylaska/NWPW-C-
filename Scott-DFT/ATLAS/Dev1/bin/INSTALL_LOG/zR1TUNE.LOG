@@ -1,0 +1,152 @@
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*       BEGAN ATLAS3.9.23 INSTALL OF SECTION 2-3-7 ON 04/15/2010 AT 16:20     *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+
+make[2]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger ; make res/zR1SUMM pre=z
+make[3]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+./xr1ksearch -p z
+
+      Read in L1 Cache size as = 32KB.
+
+Cases read in:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=2 ROUT='ATL_cgerk_2x1p.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=2 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=3 ROUT='ATL_zgerk_1x4_sse3.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=1 \
+   LDAMUL=0 FYU=0 X87=0 
+
+BEGIN BASIC KERNEL TESTS:
+   Kernel ATL_cgerk_axpy.c(1) passes basic test
+   Kernel ATL_cgerk_2x1p.c(2) passes basic test
+   Kernel ATL_zgerk_1x4_sse3.c(3) passes basic test
+DONE BASIC KERNEL TESTS:
+
+
+Surviving cases:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=2 ROUT='ATL_cgerk_2x1p.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=2 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=3 ROUT='ATL_zgerk_1x4_sse3.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=1 \
+   LDAMUL=0 FYU=0 X87=0 
+
+BEGIN L1-BLOCKED TUNING
+   1:ATL_cgerk_axpy.c gets 3000.75 MFLOPS
+   2:ATL_cgerk_2x1p.c gets 2572.01 MFLOPS
+   3:ATL_zgerk_1x4_sse3.c gets 2572.01 MFLOPS
+DONE L1-BLOCKED TUNING, CHOSE 'ATL_cgerk_axpy.c' (3000.75)
+     M       N     lda  percL1       mflop
+======  ======  ======  ======  ==========
+  1500    1500    1500      50    3000.75
+  1500    1500    1500     100    2572.01
+  1500    1500    1500      74    3000.75
+  1500    1500    1500      62    2572.01
+  1500    1500    1500      56    3000.75
+  1500    1500    1500      52    3000.75
+  1500    1500    1500      54    3000.75
+  1500    1500    1500      58    2572.01
+  1500    1500    1500      60    3000.75
+  1500    1500    1500      68    2572.01
+  1500    1500    1500      64    2572.01
+  1500    1500    1500      66    3000.75
+  1500    1500    1500      70    3000.75
+  1500    1500    1500      72    3000.75
+  1500    1500    1500      86    2572.01
+  1500    1500    1500      80    2572.01
+  1500    1500    1500      76    3000.75
+  1500    1500    1500      78    3000.75
+  1500    1500    1500      82    3000.75
+  1500    1500    1500      84    3000.75
+  1500    1500    1500      92    2572.01
+  1500    1500    1500      88    3000.75
+  1500    1500    1500      90    3000.75
+  1500    1500    1500      96    2572.01
+  1500    1500    1500      94    3000.75
+  1500    1500    1500      98    3000.75
+
+BEST CASE 50 percent of L1, MFLOP=3000.75
+
+
+BEGIN L2-BLOCKED TUNING
+   1:ATL_cgerk_axpy.c gets 3000.75 MFLOPS
+   2:ATL_cgerk_2x1p.c gets 2250.75 MFLOPS
+   3:ATL_zgerk_1x4_sse3.c gets 2572.01 MFLOPS
+DONE L2-BLOCKED TUNING, CHOSE 'ATL_cgerk_axpy.c' (3000.75)
+     M       N     lda  percL1       mflop
+======  ======  ======  ======  ==========
+  1500    1500    1500     150    3000.75
+  1500    1500    1500     800    3000.75
+  1500    1500    1500     450    3000.75
+  1500    1500    1500     300    2572.01
+  1500    1500    1500     200    3000.75
+  1500    1500    1500     250    3000.75
+  1500    1500    1500     350    2572.01
+  1500    1500    1500     400    3000.75
+  1500    1500    1500     600    3000.75
+  1500    1500    1500     500    3000.25
+  1500    1500    1500     550    3000.25
+  1500    1500    1500     700    3000.75
+  1500    1500    1500     650    3000.75
+  1500    1500    1500     750    2572.01
+
+BEST CASE 150 percent of L1, MFLOP=3000.75
+
+BEST L1-blocked kernel:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=1024 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=3.000750e+03
+BEST L2-blocked kernel:
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=3072 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=3.000750e+03,3.000750e+03
+make zinstall
+make[4]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+mkdir zr1outd
+rm -f zr1outd/*
+if [ -s "/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/Make_zr1" ]; then \
+           cd  /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger ; make -f Make_zr1 killall ; \
+           rm -f /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/Make_zr1 ; \
+        fi
+./xr1hgen -p z -F res/zR1SUMM -d zr1outd
+cp -f zr1outd/Make_zr1 /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/.
+cp zr1outd/*.c /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/.
+cp -f zr1outd/*.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+if [ -s "xccobj.exe" ] ; then \
+	   cp -f xccobj.exe /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/. ; \
+	elif [ -s "xccobj" ]; then \
+           cp -f xccobj /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/. ; \
+        fi
+touch /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/atlas_r1.h
+rm -f zr1outd/* ; rmdir zr1outd
+make[4]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+make[3]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger/res/zR1SUMM INSTALL_LOG/.
+make[2]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*      FINISHED ATLAS3.9.23 INSTALL OF SECTION 2-3-7 ON 04/15/2010 AT 16:21   *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+

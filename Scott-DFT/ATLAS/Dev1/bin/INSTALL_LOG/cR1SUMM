@@ -1,0 +1,58 @@
+#
+#MFLOP array has following meaning by index:
+#   0 : Out-of-cache, L1 blocked
+#   1 : Out-of-cache, L2 blocked
+#   2 : Out-of-cache, no blocking
+#   3 : Problem preloaded to L2, no blocking
+#   4 : Problem preloaded to L1, no blocking
+#
+#
+#Each kernel context has two kernels:
+#   1st has a restriction and so can't be called all the time
+#   2nd is used whenever restricted kernel can't be
+#   -> If kernels are same, no restricted kernel needed
+#
+# --------------------------------------------------------------
+# Next two lines are GER kernels to use for out-of-cache timings
+# --------------------------------------------------------------
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=5.290949e+03,6.046907e+03,8.001000e+03,inf,inf
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=5.290949e+03,6.046907e+03,8.001000e+03,inf,inf
+# ---------------------------------------------------------------------------
+# The next two GER kernels are for use when ops are preloaded to the L2 cache
+# ---------------------------------------------------------------------------
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=32768 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 \
+   XU=16 LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=5.290949e+03,6.046907e+03,8.001000e+03,inf,inf
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=32768 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 \
+   XU=16 LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=5.290949e+03,6.046907e+03,8.001000e+03,inf,inf
+# ---------------------------------------------------------------------------
+# The next two GER kernels are for use when ops are preloaded to the L1 cache
+# ---------------------------------------------------------------------------
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=2129 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=5.290949e+03,6.046907e+03,8.001000e+03,inf,inf
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=2129 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=5.290949e+03,6.046907e+03,8.001000e+03,inf,inf
+# -----------------------------------------------------------
+# Last two lines are L1-blocked kernels for building SYR/SYR2
+# -----------------------------------------------------------
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=2129 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=6.046907e+03
+ID=1 ROUT='ATL_cgerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=2129 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=6.046907e+03

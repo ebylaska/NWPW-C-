@@ -1,0 +1,205 @@
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*       BEGAN ATLAS3.9.23 INSTALL OF SECTION 2-1-7 ON 04/15/2010 AT 16:16     *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+
+make[2]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger ; make res/dR1SUMM pre=d
+make[3]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+gcc -c -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -O -fomit-frame-pointer -m64 -o r1ksearch.o /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//tune/blas/ger/r1ksearch.c
+gcc -DL2SIZE=4194304 -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include -I/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/contrib -DAdd_ -DF77_INTEGER=int -DStringSunStyle -DATL_OS_Linux -DATL_ARCH_Corei7 -DATL_CPUMHZ=2261 -DATL_SSE3 -DATL_SSE2 -DATL_SSE1 -DATL_USE64BITS -DATL_GAS_x8664  -DATL_NCPU=8 -O -fomit-frame-pointer -m64 -o xr1ksearch r1ksearch.o
+./xr1ksearch -p d
+make[4]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+cd /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/sysinfo ; make res/L1CacheSize
+make[5]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/sysinfo'
+make[5]: `res/L1CacheSize' is up to date.
+make[5]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/sysinfo'
+ln -s /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/sysinfo/res/L1CacheSize res/L1CacheSize
+make[4]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+
+      Read in L1 Cache size as = 32KB.
+
+Cases read in:
+ID=1 ROUT='ATL_gerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=2 ROUT='ATL_gerk_4x4_1.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=4 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=3 ROUT='ATL_gerk_1x4_0.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=1 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=4 ROUT='ATL_gerk_8x4_0.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=6 ROUT='ATL_dgerk_4x8_sse.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=3 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=16 FYU=0 X87=0 
+
+BEGIN BASIC KERNEL TESTS:
+   Kernel ATL_gerk_axpy.c(1) passes basic test
+   Kernel ATL_gerk_4x4_1.c(2) passes basic test
+   Kernel ATL_gerk_1x4_0.c(3) passes basic test
+   Kernel ATL_gerk_8x4_0.c(4) passes basic test
+   Kernel ATL_dgerk_4x8_sse.c(6) passes basic test
+DONE BASIC KERNEL TESTS:
+
+
+Surviving cases:
+ID=1 ROUT='ATL_gerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 XU=16 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=2 ROUT='ATL_gerk_4x4_1.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=4 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=3 ROUT='ATL_gerk_1x4_0.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=1 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=4 ROUT='ATL_gerk_8x4_0.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=0 FYU=0 X87=0 
+ID=6 ROUT='ATL_dgerk_4x8_sse.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=3 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=16 FYU=0 X87=0 
+
+BEGIN L1-BLOCKED TUNING
+   1:ATL_gerk_axpy.c gets 1323.12 MFLOPS
+   2:ATL_gerk_4x4_1.c gets 1176.07 MFLOPS
+   3:ATL_gerk_1x4_0.c gets 1175.94 MFLOPS
+   4:ATL_gerk_8x4_0.c gets 1511.97 MFLOPS
+DONE L1-BLOCKED TUNING, CHOSE 'ATL_gerk_8x4_0.c' (1511.97)
+     M       N     lda  percL1       mflop
+======  ======  ======  ======  ==========
+  2300    2300    2300      50    1511.97
+  2300    2300    2300     100    1511.97
+  2300    2300    2300      74    1511.97
+  2300    2300    2300      62    1511.97
+  2300    2300    2300      56    1322.95
+  2300    2300    2300      52    1511.97
+  2300    2300    2300      54    1176.07
+  2300    2300    2300      58    1511.97
+  2300    2300    2300      60    1511.97
+  2300    2300    2300      68    1511.97
+  2300    2300    2300      64    1511.97
+  2300    2300    2300      66    1511.97
+  2300    2300    2300      70    1511.97
+  2300    2300    2300      72    1511.97
+  2300    2300    2300      86    1176.07
+  2300    2300    2300      80    1175.94
+  2300    2300    2300      76    1175.94
+  2300    2300    2300      78    1176.07
+  2300    2300    2300      82    1176.07
+  2300    2300    2300      84    1511.97
+  2300    2300    2300      92    1176.07
+  2300    2300    2300      88    1322.95
+  2300    2300    2300      90    1323.12
+  2300    2300    2300      96    1511.97
+  2300    2300    2300      94    1176.07
+  2300    2300    2300      98    1511.97
+
+BEST CASE 50 percent of L1, MFLOP=1511.97
+
+
+BEGIN L2-BLOCKED TUNING
+   1:ATL_gerk_axpy.c gets 1511.97 MFLOPS
+   2:ATL_gerk_4x4_1.c gets 1322.95 MFLOPS
+   3:ATL_gerk_1x4_0.c gets 1176.07 MFLOPS
+   4:ATL_gerk_8x4_0.c gets 1175.94 MFLOPS
+DONE L2-BLOCKED TUNING, CHOSE 'ATL_gerk_axpy.c' (1511.97)
+     M       N     lda  percL1       mflop
+======  ======  ======  ======  ==========
+  2300    2300    2300     150    1322.95
+  2300    2300    2300     800    1511.97
+  2300    2300    2300     450    1322.95
+  2300    2300    2300     300    1511.97
+  2300    2300    2300     200    1322.95
+  2300    2300    2300     250    1511.97
+  2300    2300    2300     350    1511.97
+  2300    2300    2300     400    1511.97
+  2300    2300    2300     600    1511.97
+  2300    2300    2300     500    1511.97
+  2300    2300    2300     550    1322.95
+  2300    2300    2300     700    1511.97
+  2300    2300    2300     650    1322.95
+  2300    2300    2300     750    1511.97
+
+BEST CASE 250 percent of L1, MFLOP=1511.97
+
+BEST L1-blocked kernel:
+ID=4 ROUT='ATL_gerk_8x4_0.c' AUTH='R. Clint Whaley' \
+   CacheElts=2048 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=1.511973e+03
+BEST L2-blocked kernel:
+ID=1 ROUT='ATL_gerk_axpy.c' AUTH='R. Clint Whaley' \
+   CacheElts=10240 SSE=0 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=1 \
+   XU=16 LDAMUL=0 FYU=0 X87=0 \
+   MFLOP=1.511973e+03,1.511973e+03
+
+BEGIN RESTRICTED OUT-OF-CACHE TUNING
+   6:ATL_dgerk_4x8_sse.c gets 1322.95 MFLOPS
+ID=6 ROUT='ATL_dgerk_4x8_sse.c' AUTH='R. Clint Whaley' \
+   CacheElts=0 SSE=3 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=16 FYU=0 X87=0 \
+   MFLOP=0.000000e+00,0.000000e+00,1.322953e+03
+
+BEGIN RESTRICTED L1-BLOCKED TUNING TUNING
+   6:ATL_dgerk_4x8_sse.c gets 1511.97 MFLOPS
+ID=6 ROUT='ATL_dgerk_4x8_sse.c' AUTH='R. Clint Whaley' \
+   CacheElts=2048 SSE=3 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=16 FYU=0 X87=0 \
+   MFLOP=1.511973e+03,0.000000e+00,1.322953e+03
+
+BEGIN RESTRICTED in-L1 TUNING TUNING
+ID=6 ROUT='ATL_dgerk_4x8_sse.c' AUTH='R. Clint Whaley' \
+   CacheElts=2048 SSE=3 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 XU=8 \
+   LDAMUL=16 FYU=0 X87=0 \
+   MFLOP=1.511973e+03,0.000000e+00,1.322953e+03,0.000000e+00,2.769065e+03
+
+BEGIN RESTRICTED in-L2 TUNING TUNING
+ID=6 ROUT='ATL_dgerk_4x8_sse.c' AUTH='R. Clint Whaley' \
+   CacheElts=10240 SSE=3 alignA=0 alignY=0 alignX=0 minX=0 minY=0 YU=4 \
+   XU=8 LDAMUL=16 FYU=0 X87=0 \
+   MFLOP=1.511973e+03,0.000000e+00,1.322953e+03,2.786640e+03,2.769065e+03
+make dinstall
+make[4]: Entering directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+cp: cannot stat `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin/xccobj.exe': No such file or directory
+make[4]: [xccobj] Error 1 (ignored)
+mkdir dr1outd
+rm -f dr1outd/*
+if [ -s "/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/Make_dr1" ]; then \
+           cd  /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger ; make -f Make_dr1 killall ; \
+           rm -f /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/Make_dr1 ; \
+        fi
+./xr1hgen -p d -F res/dR1SUMM -d dr1outd
+cp -f dr1outd/Make_dr1 /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/.
+cp dr1outd/*.c /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/.
+cp -f dr1outd/*.h /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/include/.
+if [ -s "xccobj.exe" ] ; then \
+	   cp -f xccobj.exe /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/. ; \
+	elif [ -s "xccobj" ]; then \
+           cp -f xccobj /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/src/blas/ger/. ; \
+        fi
+touch /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/..//include/atlas_r1.h
+rm -f dr1outd/* ; rmdir dr1outd
+make[4]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+make[3]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger'
+cp /home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/tune/blas/ger/res/dR1SUMM INSTALL_LOG/.
+make[2]: Leaving directory `/home/bylaska/Codes/Scott-DFT/ATLAS/Dev1/bin'
+
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+*      FINISHED ATLAS3.9.23 INSTALL OF SECTION 2-1-7 ON 04/15/2010 AT 16:16   *
+*******************************************************************************
+*******************************************************************************
+*******************************************************************************
+
+
+

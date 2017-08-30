@@ -1,0 +1,24 @@
+
+topd = /home/whaley/atlas3.9/AtlasBase
+incs = -def topd /home/whaley/atlas3.9/AtlasBase \
+       -def incd /home/whaley/atlas3.9/AtlasBase/Clint \
+       -def BASEdir /home/whaley/atlas3.9/AtlasBase/Antoine/ \
+       -def basd /home/whaley/atlas3.9/AtlasBase/Clint
+ext  = extract
+extF = $(ext) -langF -lnlen71 -Remtblank -llwarn2 -LAPACK1 $(incs)
+ext9 = $(ext) -langF -lnlen132 -RemtBlank $(incs)
+extC = $(ext) -langC -lnlen79 -Remtblank -llwarn2 $(incs)
+extM = $(ext) -langM -lnlen79 -llwarn2 $(incs)
+
+default: all
+force_build:
+basd = /home/whaley/atlas3.9/AtlasBase/Clint
+basdRCW = /home/whaley/atlas3.9/AtlasBase/Clint
+basdAPP = /home/whaley/atlas3.9/AtlasBase/Antoine
+basdSTU = /home/whaley/atlas3.9/AtlasBase/Students
+incf = /home/whaley/atlas3.9/AtlasBase/gen.inc
+
+#
+# Nothing in here after redesign
+#
+all :

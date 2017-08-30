@@ -1,0 +1,273 @@
+########################################################################
+#  
+#  -- Automatically Tuned Linear Algebra Software (ATLAS)
+#     (C) Copyright 2000 All Rights Reserved
+#
+########################################################################
+#
+#  -- Copyright notice and Licensing terms:
+#
+#  Redistribution  and  use in  source and binary forms, with or without
+#  modification, are  permitted provided  that the following  conditions
+#  are met:
+#
+#  1. Redistributions  of  source  code  must retain the above copyright
+#     notice, this list of conditions and the following disclaimer.
+#  2. Redistributions in binary form must reproduce  the above copyright
+#     notice,  this list of conditions, and the  following disclaimer in
+#     the documentation and/or other materials provided with the distri-
+#     bution.
+#  3. The name of the University,  the ATLAS group,  or the names of its
+#     contributors  may not be used to endorse or promote products deri-
+#     ved from this software without specific written permission.
+#
+#  -- Disclaimer:
+#
+#  THIS  SOFTWARE  IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+#  ``AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES,  INCLUDING,  BUT NOT
+#  LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+#  A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY
+#  OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,  INDIRECT, INCIDENTAL, SPE-
+#  CIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED
+#  TO,  PROCUREMENT  OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA,
+#  OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEO-
+#  RY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT  (IN-
+#  CLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+#  THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#  
+########################################################################
+#
+include Make.inc
+mySRCdir = $(SRCdir)/src/pthreads/blas/level2
+#
+########################################################################
+#
+INC2dep   = \
+   $(INCAdir)/atlas_pthreads.h     $(INCSdir)/atlas_aux.h      \
+   $(INCSdir)/atlas_enum.h      $(INCSdir)/atlas_misc.h     \
+   $(INCSdir)/atlas_level1.h    $(INCSdir)/atlas_level2.h   \
+   $(INCSdir)/atlas_ptmisc.h    $(INCSdir)/atlas_ptlvl1.h   \
+   $(INCSdir)/atlas_ptlevel1.h  $(INCSdir)/atlas_ptlvl2.h   \
+   $(INCSdir)/atlas_ptlevel2.h
+#
+## Object files ########################################################
+#
+ATL_slvl2obj = \
+   ATL_sptgbmv.o ATL_sptgemv.o ATL_sptger.o ATL_sptsbmv.o ATL_sptspmv.o \
+   ATL_sptspr.o ATL_sptspr2.o ATL_sptsymv.o ATL_sptsyr.o ATL_sptsyr2.o \
+   ATL_spttbmv.o ATL_spttbsv.o ATL_spttpmv.o ATL_spttpsv.o ATL_spttrmv.o \
+   ATL_spttrsv.o
+#
+ATL_dlvl2obj = \
+   ATL_dptgbmv.o ATL_dptgemv.o ATL_dptger.o ATL_dptsbmv.o ATL_dptspmv.o \
+   ATL_dptspr.o ATL_dptspr2.o ATL_dptsymv.o ATL_dptsyr.o ATL_dptsyr2.o \
+   ATL_dpttbmv.o ATL_dpttbsv.o ATL_dpttpmv.o ATL_dpttpsv.o ATL_dpttrmv.o \
+   ATL_dpttrsv.o
+#
+ATL_clvl2obj = \
+   ATL_cptgbmv.o ATL_cptgemv.o ATL_cptgerc.o ATL_cptgeru.o ATL_cpthbmv.o \
+   ATL_cpthemv.o ATL_cpther.o ATL_cpther2.o ATL_cpthpmv.o ATL_cpthpr.o \
+   ATL_cpthpr2.o ATL_cpttbmv.o ATL_cpttbsv.o ATL_cpttpmv.o ATL_cpttpsv.o \
+   ATL_cpttrmv.o ATL_cpttrsv.o
+#
+ATL_zlvl2obj = \
+   ATL_zptgbmv.o ATL_zptgemv.o ATL_zptgerc.o ATL_zptgeru.o ATL_zpthbmv.o \
+   ATL_zpthemv.o ATL_zpther.o ATL_zpther2.o ATL_zpthpmv.o ATL_zpthpr.o \
+   ATL_zpthpr2.o ATL_zpttbmv.o ATL_zpttbsv.o ATL_zpttpmv.o ATL_zpttpsv.o \
+   ATL_zpttrmv.o ATL_zpttrsv.o
+#
+## Targets #############################################################
+#
+all   : lib
+#
+lvl2  : lib
+#
+lib   : dlib slib zlib clib
+#
+slvl2 : slib
+dlvl2 : dlib
+clvl2 : clib
+zlvl2 : zlib
+#
+slib  : slib.grd
+dlib  : dlib.grd
+clib  : clib.grd
+zlib  : zlib.grd
+#
+slib.grd  : $(ATL_slvl2obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_slvl2obj)
+	$(RANLIB) $(ATLASlib)
+	touch slib.grd
+#
+dlib.grd  : $(ATL_dlvl2obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_dlvl2obj)
+	$(RANLIB) $(ATLASlib)
+	touch dlib.grd
+#
+clib.grd  : $(ATL_clvl2obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_clvl2obj)
+	$(RANLIB) $(ATLASlib)
+	touch clib.grd
+#
+zlib.grd  : $(ATL_zlvl2obj)
+	$(ARCHIVER) $(ARFLAGS) $(ATLASlib) $(ATL_zlvl2obj)
+	$(RANLIB) $(ATLASlib)
+	touch zlib.grd
+#
+########################################################################
+#
+ATL_sptgbmv.o                : $(mySRCdir)/ATL_ptgbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptgbmv.c
+ATL_sptgemv.o                : $(mySRCdir)/ATL_ptgemv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptgemv.c
+ATL_sptger.o                 : $(mySRCdir)/ATL_ptger.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptger.c
+ATL_sptsbmv.o                : $(mySRCdir)/ATL_ptsbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptsbmv.c
+ATL_sptspmv.o                : $(mySRCdir)/ATL_ptspmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptspmv.c
+ATL_sptsymv.o                : $(mySRCdir)/ATL_ptsymv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptsymv.c
+ATL_sptspr.o                 : $(mySRCdir)/ATL_ptspr.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptspr.c
+ATL_sptsyr.o                 : $(mySRCdir)/ATL_ptsyr.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptsyr.c
+ATL_sptspr2.o                : $(mySRCdir)/ATL_ptspr2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptspr2.c
+ATL_sptsyr2.o                : $(mySRCdir)/ATL_ptsyr2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_ptsyr2.c
+ATL_spttbmv.o                : $(mySRCdir)/ATL_pttbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_pttbmv.c
+ATL_spttpmv.o                : $(mySRCdir)/ATL_pttpmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_pttpmv.c
+ATL_spttrmv.o                : $(mySRCdir)/ATL_pttrmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_pttrmv.c
+ATL_spttbsv.o                : $(mySRCdir)/ATL_pttbsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_pttbsv.c
+ATL_spttpsv.o                : $(mySRCdir)/ATL_pttpsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_pttpsv.c
+ATL_spttrsv.o                : $(mySRCdir)/ATL_pttrsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSREAL $(mySRCdir)/ATL_pttrsv.c
+#
+ATL_dptgbmv.o                : $(mySRCdir)/ATL_ptgbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptgbmv.c
+ATL_dptgemv.o                : $(mySRCdir)/ATL_ptgemv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptgemv.c
+ATL_dptger.o                 : $(mySRCdir)/ATL_ptger.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptger.c
+ATL_dptsbmv.o                : $(mySRCdir)/ATL_ptsbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptsbmv.c
+ATL_dptspmv.o                : $(mySRCdir)/ATL_ptspmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptspmv.c
+ATL_dptsymv.o                : $(mySRCdir)/ATL_ptsymv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptsymv.c
+ATL_dptspr.o                 : $(mySRCdir)/ATL_ptspr.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptspr.c
+ATL_dptsyr.o                 : $(mySRCdir)/ATL_ptsyr.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptsyr.c
+ATL_dptspr2.o                : $(mySRCdir)/ATL_ptspr2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptspr2.c
+ATL_dptsyr2.o                : $(mySRCdir)/ATL_ptsyr2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_ptsyr2.c
+ATL_dpttbmv.o                : $(mySRCdir)/ATL_pttbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_pttbmv.c
+ATL_dpttpmv.o                : $(mySRCdir)/ATL_pttpmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_pttpmv.c
+ATL_dpttrmv.o                : $(mySRCdir)/ATL_pttrmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_pttrmv.c
+ATL_dpttbsv.o                : $(mySRCdir)/ATL_pttbsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_pttbsv.c
+ATL_dpttpsv.o                : $(mySRCdir)/ATL_pttpsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_pttpsv.c
+ATL_dpttrsv.o                : $(mySRCdir)/ATL_pttrsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDREAL $(mySRCdir)/ATL_pttrsv.c
+#
+ATL_cptgbmv.o                : $(mySRCdir)/ATL_ptgbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptgbmv.c
+ATL_cptgemv.o                : $(mySRCdir)/ATL_ptgemv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptgemv.c
+ATL_cptgerc.o                : $(mySRCdir)/ATL_ptgerc.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptgerc.c
+ATL_cptgeru.o                : $(mySRCdir)/ATL_ptgeru.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_ptgeru.c
+ATL_cpthbmv.o                : $(mySRCdir)/ATL_pthbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pthbmv.c
+ATL_cpthpmv.o                : $(mySRCdir)/ATL_pthpmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pthpmv.c
+ATL_cpthemv.o                : $(mySRCdir)/ATL_pthemv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pthemv.c
+ATL_cpthpr.o                 : $(mySRCdir)/ATL_pthpr.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pthpr.c
+ATL_cpther.o                 : $(mySRCdir)/ATL_pther.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pther.c
+ATL_cpthpr2.o                : $(mySRCdir)/ATL_pthpr2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pthpr2.c
+ATL_cpther2.o                : $(mySRCdir)/ATL_pther2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pther2.c
+ATL_cpttbmv.o                : $(mySRCdir)/ATL_pttbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pttbmv.c
+ATL_cpttpmv.o                : $(mySRCdir)/ATL_pttpmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pttpmv.c
+ATL_cpttrmv.o                : $(mySRCdir)/ATL_pttrmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pttrmv.c
+ATL_cpttbsv.o                : $(mySRCdir)/ATL_pttbsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pttbsv.c
+ATL_cpttpsv.o                : $(mySRCdir)/ATL_pttpsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pttpsv.c
+ATL_cpttrsv.o                : $(mySRCdir)/ATL_pttrsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DSCPLX $(mySRCdir)/ATL_pttrsv.c
+#
+ATL_zptgbmv.o                : $(mySRCdir)/ATL_ptgbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptgbmv.c
+ATL_zptgemv.o                : $(mySRCdir)/ATL_ptgemv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptgemv.c
+ATL_zptgerc.o                : $(mySRCdir)/ATL_ptgerc.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptgerc.c
+ATL_zptgeru.o                : $(mySRCdir)/ATL_ptgeru.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_ptgeru.c
+ATL_zpthbmv.o                : $(mySRCdir)/ATL_pthbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pthbmv.c
+ATL_zpthpmv.o                : $(mySRCdir)/ATL_pthpmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pthpmv.c
+ATL_zpthemv.o                : $(mySRCdir)/ATL_pthemv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pthemv.c
+ATL_zpthpr.o                 : $(mySRCdir)/ATL_pthpr.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pthpr.c
+ATL_zpther.o                 : $(mySRCdir)/ATL_pther.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pther.c
+ATL_zpthpr2.o                : $(mySRCdir)/ATL_pthpr2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pthpr2.c
+ATL_zpther2.o                : $(mySRCdir)/ATL_pther2.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pther2.c
+ATL_zpttbmv.o                : $(mySRCdir)/ATL_pttbmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pttbmv.c
+ATL_zpttpmv.o                : $(mySRCdir)/ATL_pttpmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pttpmv.c
+ATL_zpttrmv.o                : $(mySRCdir)/ATL_pttrmv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pttrmv.c
+ATL_zpttbsv.o                : $(mySRCdir)/ATL_pttbsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pttbsv.c
+ATL_zpttpsv.o                : $(mySRCdir)/ATL_pttpsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pttpsv.c
+ATL_zpttrsv.o                : $(mySRCdir)/ATL_pttrsv.c $(INC2dep)
+	$(ICC) -o $@ -c $(ICCFLAGS) -DATL_USEPTHREADS -DDCPLX $(mySRCdir)/ATL_pttrsv.c
+#
+########################################################################
+#
+sclean           :
+	rm -f $(ATL_slvl2obj) s*.grd
+#
+dclean           :
+	rm -f $(ATL_dlvl2obj) d*.grd
+#
+cclean           :
+	rm -f $(ATL_clvl2obj) c*.grd
+#
+zclean           :
+	rm -f $(ATL_zlvl2obj) z*.grd
+#
+#
+clean            :
+	rm -f *.o *.grd
+#
+########################################################################

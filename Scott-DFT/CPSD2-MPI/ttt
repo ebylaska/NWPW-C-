@@ -1,0 +1,33 @@
+
+
+void Pneb::fmf_Multiply(const int mb, double *psi1, double *hml, double alpha, double *psi2, double beta)
+{
+   int ms,n,shift1,mshift1,ishift2;
+
+   int one = 1;
+   int ng  = 2*npack(1);
+   int ng0 = 2*nzero(1);
+   if (parallelized)
+   {
+     printf("not finished\n");
+   }
+   else
+   {
+      if (mb==-1)
+      {   ms1=0; ms2=ispin; ishift2=ne[0]*ne[0]; }
+      else
+      {   ms1=ms; ms2=ms+1; ishift2=0; }
+      for (ms=ms1; ms<ms2; ++ms)
+      {
+         n       = ne[ms];
+         shift1  = ms*ne[0]*ng;
+         mshift1 = ms*ishift2;
+         dgemm_("N","N",&ng,&n,&n,
+                &alpha,
+                &psi1[shift1],&ng,
+                &hml[mshift1],&n,
+                &beta,
+                &psi2[shift1],&ng);
+      }
+   }
+}

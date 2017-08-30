@@ -1,0 +1,8 @@
+0 'gcc' '-fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64'
+1 'gcc' '-fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64'
+2 'gcc' '-fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64'
+3 'gcc' '-fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64'
+4 'gcc' '-fomit-frame-pointer -mfpmath=sse -msse3 -O2 -fno-schedule-insns2 -m64'
+5 'gcc' '-O -fomit-frame-pointer -m64'
+6 'gfortran' '-O -m64'
+F2CNAME,F2CINT,F2CSTRING=(1,1,1)

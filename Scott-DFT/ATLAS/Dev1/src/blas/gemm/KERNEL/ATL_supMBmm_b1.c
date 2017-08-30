@@ -1,0 +1,23 @@
+#define SREAL
+#include "atlas_misc.h"
+void ATL_supMBmm0_2_0_b1
+   (const int M, const int N, const int K, const float alpha,
+    const float *A, const int lda, const float *B, const int ldb,
+    const float beta, float *C, const int ldc);
+void ATL_sgpMBmm_b1
+   (const int M, const int N, const int K, const float alpha,
+    const float *A, const int lda, const float *B, const int ldb,
+    const float beta, float *C, const int ldc);
+
+void ATL_spMBmm_b1
+   (const int M, const int N, const int K, const float alpha,
+    const float *A, const int lda, const float *B, const int ldb,
+    const float beta, float *C, const int ldc)
+{
+
+   if (M == (((((M) >> 1)) << 1)))
+   {
+      ATL_supMBmm0_2_0_b1(M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
+   }
+   else ATL_sgpMBmm_b1(M, N, K, alpha, A, lda, B, ldb, beta, C, ldc);
+}
