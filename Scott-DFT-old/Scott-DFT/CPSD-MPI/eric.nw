@@ -1,0 +1,22 @@
+
+start eric
+
+geometry
+C 0 0 0
+C 0 0 1
+end
+
+nwpw
+   simulation_cell
+     SC 30.0
+     ngrid 48 48 48
+   end
+   mapping 2
+   #nobalance
+   #np_dimensions -1 2
+   steepest_descent
+     input_wavefunction_filename eric.movecs
+     loop 1 1
+   end
+end
+task pspw noit_energy

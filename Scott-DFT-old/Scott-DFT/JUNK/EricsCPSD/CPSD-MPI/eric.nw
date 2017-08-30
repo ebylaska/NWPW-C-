@@ -1,0 +1,17 @@
+
+start eric
+
+geometry
+C 0 0 0
+C 1 0 0
+end
+
+nwpw
+   simulation_cell
+     SC 20.0
+     ngrid 48 48 48
+   end
+   mapping 2
+   nobalance
+end
+task pspw noit_energy
