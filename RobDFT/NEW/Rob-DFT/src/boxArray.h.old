@@ -1,0 +1,288 @@
+#ifndef BOXARRAY_H
+#define BOXARRAY_H
+
+#include <iostream>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <sys/mman.h>
+#include <fcntl.h>
+using namespace std;
+
+#include <math.h>
+#include <string.h>
+#include "psiHeader.h"
+#include "rtdb.h"
+#include "Ion.h"
+#include "control.h"
+#include "CommonData.h"
+#include "PseudopotentialData.h"
+
+// Thrust headers
+#include <thrust/device_ptr.h>
+#include <thrust/transform_reduce.h>
+#include <thrust/host_vector.h>
+#include <thrust/device_vector.h>
+#include <thrust/generate.h>
+#include <thrust/reduce.h>
+#include <thrust/functional.h>
+#include <thrust/iterator/counting_iterator.h>
+#include <cmath>
+
+template <typename Real, typename Real2>
+class boxArray {
+ protected:
+  // computational variables
+  thrust::device_vector<Real2> psiVect[2];
+  thrust::device_vector<Real2> *psi1, *psi2;
+
+  // housekeeping variables
+  PsiHeader<Real> psiHeader;
+  CommonData<Real> *cd;
+  PseudoPotentialData<Real> *pspData;
+  int nWavefunc;
+
+  // methods
+  void errorExit(char* s) { cerr << s << endl; exit(1);}
+
+  inline void switchPsi()
+    {
+      thrust::device_vector<Real2> *tmp = psi1;
+      psi1 = psi2;
+      psi2 = tmp;
+    }
+
+ public:
+  // stuff for the k-space operator
+  struct kspace_op
+  {
+    const Real2* psi;
+    const Real* tg;
+    const Real dte;
+    const int tg_size;
+
+  kspace_op(
+	    const Real2* _psi,
+	    const Real* _tg,
+	    const Real _dte,
+	    const int _tg_size
+	    ): psi(_psi), tg(_tg), dte(_dte), tg_size(_tg_size) {};
+    __host__ __device__
+    Real2 operator()(const Real2& psi1) const { 
+      int j = &psi1 - psi;
+      double tg_j = tg[j%tg_size]; // serialize on tg
+      register Real2 ret;
+      ret.x = psi1.x + (psi1.x * tg_j * dte);
+      ret.y = psi1.y + (psi1.y * tg_j * dte);
+      return ret;
+    }
+  };
+
+ inline void kspace_operator()
+#ifdef KSPACE_HOST_SIDE
+  {
+    int n = nWavefunc*cd->nfft3d;
+    thrust::host_vector<Real2> t_psi1(*psi1);
+    thrust::host_vector<Real2> t_psi2(n);
+    thrust::host_vector<Real> t_tg(cd->d_tg);
+    for(int j=0; j < n; j++) {
+      double tg_j = t_tg[j%cd->nfft3d]; // serialize on tg
+      register Real2 ret;
+      ret.x = t_psi1[j].x + (t_psi1[j].x * tg_j * cd->dte);
+      ret.y = t_psi1[j].y + (t_psi1[j].y * tg_j * cd->dte);
+      t_psi2[j] = ret;
+    }
+    *psi2 = t_psi2;
+  }
+#else
+  {
+    kspace_op unary_op(
+		       thrust::raw_pointer_cast(&((*psi1)[0])),
+		       thrust::raw_pointer_cast(&((cd->d_tg)[0])),
+		       cd->dte, cd->nfft3d);
+    thrust::transform(psi1->begin(), psi1->end(), psi2->begin(), unary_op);
+  }
+#endif
+
+  // calculated values from inner_loop
+  Real *E[], deltae, deltar, deltac;
+  ~boxArray()
+    {
+      delete cd;
+    }
+  boxArray(char* rootFilename)
+    {
+      int fd;
+      struct stat statbuf;
+      string s(rootFilename);
+      string filename(s + string(".movecs"));
+      string dbFilename(s + string(".db"));
+
+      if( (fd=open(filename.c_str(), O_RDONLY)) < 0) errorExit((char*)"cannot open file");
+      if(fstat(fd,&statbuf) < 0) errorExit((char*)"cannot stat file");
+      cerr << "NWChem filename " << filename << " size " << statbuf.st_size << endl;
+      char *mmapBuf = (char *) mmap(0,statbuf.st_size,PROT_READ,MAP_SHARED,fd,0);
+      RTDB myrtdb( dbFilename.c_str(), "old");
+      control_read(myrtdb);
+
+      PsiHeader<Real> tmp(mmapBuf);
+      psiHeader = tmp;
+      char *buf = mmapBuf + psiHeader.get_nBytes();
+
+      cd = new CommonData<Real>(psiHeader, myrtdb);
+
+      nWavefunc = psiHeader.get_ne(0) + psiHeader.get_ne(1);
+
+      // allocate and read wavefunctions
+      int size = nWavefunc * (cd->nx+2) * cd->ny * cd->nz;
+      psiVect[0] = thrust::device_vector<Real2>(size);
+      psiVect[1] = thrust::device_vector<Real2>(size);
+      psi1 = &psiVect[0]; psi2 = &psiVect[1];
+
+      {
+	thrust::host_vector<Real2> tmp(size);
+	int index=0;
+	for (int i=0; i < nWavefunc*(cd->nfft3d); i++) {
+	  tmp[i].x = (Real) ((double*)buf)[index++];
+	  tmp[i].y = (Real) ((double*)buf)[index++];
+	}
+	(*psi1) = tmp; // move to GPU
+      }
+      buf += nWavefunc*2*cd->nfft3d*sizeof(double);
+      switchPsi();
+
+      munmap(mmapBuf,statbuf.st_size);
+      close(fd);
+
+      // construct strfact here
+
+      //pspData = new PseudoPotentialData<Real>(s.c_str(), cd,strFact);
+      //vl = pspData.get_vl_ptr();
+      //vnl = pspData.get_vnl_ptr();
+      //Gij; ncore_atom, rlocal, amass, npsp, nprj, lmax, llcp, nmax, psp_type
+      // semicore, rc, zv, rcore,
+      
+    } 
+
+  // stuff for the Ke operator
+
+#ifdef FOO
+  struct Ke_op
+  {
+    const Real2* psi;
+    const Real* tg;
+    const Real* summer;
+    const int nfft3d;
+    
+  Ke_op(
+	const Real2* _psi,
+	const Real* _tg,
+	const Real* _summer,
+	const int _nfft3d ): psi(_psi), tg(_tg), summer(_summer), nfft3d(_nfft3d) {};
+    __host__ __device__
+    Real operator()(const Real2& psi1) const { 
+      register int i = (&psi1 - psi)% nfft3d;
+      return (psi1.x * psi1.x + psi1.y * psi1.y) * tg[i] * summer[i];
+    }
+  };
+  struct Ke_binary_op 
+    : public thrust::binary_function<const Real2&, const Real2&, Real>
+    {
+      __host__ __device__
+	Real operator()(const Real2& a, const Real2 & b) const
+      {
+	Real result = a.x + b.x;
+        return result;
+      }
+    };
+
+  //struct Ke_bin_op {
+    //__host__ __device__
+    //Real operator()(const Real2& a, const Real2& b) const {
+      //Real tmp = a.x + b.x;
+      //return tmp;
+    //}
+  //};
+#endif
+
+  struct Ke_unary_op : public thrust::unary_function<Real2,Real>
+    {
+      const Real2* psi;
+      const Real* tg;
+      const Real* summer;
+      const int nfft3d;
+      
+    Ke_unary_op(const Real2* _psi, const Real* _tg,
+		const Real* _summer, const int _nfft3d )
+      : psi(_psi), tg(_tg), summer(_summer), nfft3d(_nfft3d) {};
+      
+      __host__ __device__
+	Real operator()(Real2& psi1)
+      {
+	register int i = (&psi1 - psi)% nfft3d;
+	return (psi1.x * psi1.x + psi1.y * psi1.y) * tg[i] * summer[i];
+      }
+    };
+
+  inline Real kineticEnergy()
+  {
+    //#define KE_HOST_SIDE
+#ifdef KE_HOST_SIDE
+    Real sum=0.0;
+    thrust::host_vector<Real2> tmp(*psi1);
+    
+    for(int i=0; i < nWavefunc; i++) {
+      Real2 *wavef = &tmp[i*cd->nfft3d];
+      for(int j=0; j < cd->nfft3d; j++){
+        sum += (  wavef[j].x * wavef[j].x + wavef[j].y * wavef[j].y)
+          * cd->h_tg[j%cd->nfft3d]
+          * cd->h_summer[1][j%cd->nfft3d];
+      }
+    }
+#else
+    Ke_unary_op unary_op(thrust::raw_pointer_cast(&(*psi1)[0]),
+			 thrust::raw_pointer_cast(&cd->d_tg[0]),
+			 thrust::raw_pointer_cast(&cd->d_summer[1][0]),
+			 cd->nfft3d);
+    Real sum = thrust::transform_reduce(psi1->begin(), psi1->end(), unary_op,
+				 (Real) 0.,
+				 thrust::plus<Real>());
+#endif
+    if (psiHeader.get_ispin()==1) sum *= 2.0;
+    sum = -sum;
+    return sum;
+  }
+
+  Real normCheck()
+  {
+    Real sum=0.0;
+    thrust::host_vector<Real2> tmp(*psi1);
+
+    for(int i=0; i < nWavefunc; i++) {
+      Real2 *wavef = &tmp[i*cd->nfft3d];
+      for(int j=0; j < cd->nfft3d; j++){
+	sum += (  wavef[j].x*wavef[j].x + wavef[j].y*wavef[j].y)
+	  * cd->h_summer[1][j];
+      }
+      cerr << "cumulative sum " << sum << " " << i << endl;
+    }
+    return sum;
+  }
+
+  void inner_loop()
+  {
+    Real Ke;
+
+    int it_in = control_loop(0);
+    cerr << "inner_loop, it_in " << it_in << endl;
+    for(int iter=0; iter < it_in; iter++) {
+      switchPsi();
+      cerr << nWavefunc << " " << normCheck() << endl;
+      kspace_operator();
+    }
+    cerr << "start Ke is " << endl;
+    Ke = kineticEnergy();
+    cerr << "Ke is " << Ke << endl;
+  }
+};
+
+#endif

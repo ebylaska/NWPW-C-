@@ -1,0 +1,30 @@
+title "eric test driver used to create eric.db"
+
+memory 900 mb
+start eric
+
+geometry noautosym noautoz
+C 0 0 0
+H 0 0 1
+H 0 1 0
+H 1 0 0
+H 1 0 1
+end
+
+nwpw
+   simulation_cell
+     SC 30.0
+     ngrid 64 64 64
+   end
+   mapping 2
+   #nobalance
+   #np_dimensions -1 5
+   steepest_descent
+     #input_wavefunction_filename eric.movecs
+     #output_wavefunction_filename eric2.movecs
+     loop 1 10
+   end
+   loop 1 10
+end
+#task pspw energy
+task pspw noit_energy

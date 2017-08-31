@@ -1,0 +1,16 @@
+  void precomputeVg()
+  {
+    Real fourpi  = 16.00*atan(1.0);
+    d_vg = thrust::device_vector<Real>(nfft3d);
+    h_vg = thrust::host_vector<Real>(nfft3d);
+
+    h_vg[0] = 0.0;
+    for(int k=0; k < nfft3d; ++k) {
+      Real gg = G[0][k]*G[0][k] + G[1][k]*G[1][k] + G[2][k]*G[2][k];
+      h_vg[k] = fourpi/gg;
+    }
+    for(int k=0; k < nfft3d; ++k)
+      h_vg[k] *= h_masker[0][k];
+    d_vg = h_vg;
+  }
+

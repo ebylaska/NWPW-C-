@@ -1,0 +1,47 @@
+
+
+memory 5900 mb
+start eric3
+
+geometry noautosym noautoz
+C          1.34631        2.68894       -0.64901
+C          0.46903        1.87495        0.28217
+C          0.05250        0.58185       -0.40057
+C          0.97017       -0.57843       -0.02502
+C          2.34343       -0.44101       -0.66294
+C          3.29916        0.22127        0.31051
+C          4.51071        0.73515       -0.43590
+C          5.38103        1.53036        0.51327
+C          2.07670        3.75326        0.14103
+C          3.05660        4.46427       -0.76755
+C          3.96995        5.33976        0.06288
+C          5.00786        5.97896       -0.83441
+C          6.44126        2.26944       -0.27444
+C          7.25344        3.13640        0.66360
+C          8.12973        4.06496       -0.14900
+C          8.83844        5.03579        0.77529
+C          6.07421        6.62816        0.02064
+C          7.19845        7.13299       -0.86259
+C          8.43740        7.39570       -0.02124
+C          9.38990        6.20335       -0.02766
+end
+
+nwpw
+   simulation_cell
+     SC 30.0
+     ngrid 64 64 64
+   end
+   mapping 1
+   #nobalance
+   #np_dimensions -1 5
+   steepest_descent
+     #input_wavefunction_filename eric.movecs
+     #output_wavefunction_filename eric2.movecs
+     loop 1 10
+   end
+   loop 1 10
+end
+#task pspw energy
+task pspw steepest_descent
+#task pspw noit_energy
+

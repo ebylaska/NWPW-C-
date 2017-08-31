@@ -1,0 +1,211 @@
+#ifndef COMMON_DATA_H
+#define COMMON_DATA_H
+
+#include <math.h>
+#include "psiHeader.h"
+#include "rtdb.h"
+#include "Ion.h"
+#include "control.h"
+#include <assert.h>
+
+// thrust headers
+#include <thrust/host_vector.h>
+#include <thrust/device_vector.h>
+
+template <typename Real>
+class CommonData {
+ public:
+  int nx,ny,nz,nfft3d,n2ft3d; // const
+  Real unitg[9], omega,ecut,wcut; //const
+  Real dte; // const
+  thrust::device_vector<Real> d_masker[2];
+  thrust::device_vector<Real> d_summer[2];
+  thrust::device_vector<Real> d_tg, d_2tg; // const
+
+  thrust::host_vector<Real> G[3]; // const
+  thrust::host_vector<Real> h_tg, h_2tg; // const
+  thrust::host_vector<Real> h_masker[2];
+  thrust::host_vector<Real> h_summer[2];
+  
+  void precomputeUnitg(Real* unita)
+  {
+    const double twopi = 8.0*atan(1.0);
+    unitg[0] = unita[4]*unita[8] - unita[5]*unita[7];
+    unitg[1] = unita[5]*unita[6] - unita[3]*unita[8];
+    unitg[2] = unita[3]*unita[7] - unita[4]*unita[6];
+    unitg[3] = unita[7]*unita[2] - unita[8]*unita[1];
+    unitg[4] = unita[8]*unita[0] - unita[6]*unita[2];
+    unitg[5] = unita[6]*unita[1] - unita[7]*unita[0];
+    unitg[6] = unita[1]*unita[5] - unita[2]*unita[4];
+    unitg[7] = unita[2]*unita[3] - unita[0]*unita[5];
+    unitg[8] = unita[0]*unita[4] - unita[1]*unita[3];
+    double volume = unita[0]*unitg[0] + unita[1]*unitg[1] + unita[2]*unitg[2];
+    for (int i=0; i<9; ++i) unitg[i] *= twopi/volume;
+    omega = fabs(volume);
+  }
+  void precomputeG()
+  {
+    G[0] = thrust::host_vector<Real>(nfft3d);
+    G[1] = thrust::host_vector<Real>(nfft3d);
+    G[2] = thrust::host_vector<Real>(nfft3d);
+    for(int k3=(-nz/2+1); k3 <= (nz/2); ++k3)
+      for(int k2=(-ny/2+1); k2 <= (ny/2); ++k2)
+	for(int k1=0; k1 <= (nx/2); ++k1) {
+	  double gx = k1*unitg[0] + k2*unitg[3] + k3*unitg[6];
+	  double gy = k1*unitg[1] + k2*unitg[4] + k3*unitg[7];
+	  double gz = k1*unitg[2] + k2*unitg[5] + k3*unitg[8];
+	  int i=k1; if(i<0) i += nx;
+	  int j=k2; if(j<0) j += ny;
+	  int k=k3; if(k<0) k += nz;
+	  int indx = i + j*(nx/2+1) + k*(nx/2+1)*ny;
+	  assert(indx < nfft3d);
+	  assert(indx >= 0);
+	  G[0][indx]=gx;
+	  G[1][indx]=gy;
+	  G[2][indx]=gz;
+	}
+  }
+  void precomputeTg()
+  {
+    d_tg = thrust::device_vector<Real>(nfft3d);
+    d_2tg = thrust::device_vector<Real>(n2ft3d);
+
+    h_tg = thrust::host_vector<Real>(nfft3d);
+    h_2tg = thrust::host_vector<Real>(n2ft3d);
+    
+    for(int k=0; k < nfft3d; ++k) {
+      Real gg = G[0][k]*G[0][k] + G[1][k]*G[1][k] + G[2][k]*G[2][k];
+      h_tg[k] = -0.5 * gg;
+      //cerr << "tg " << tg[k] << " " << gg << " " << G[0][k] << " " << endl;
+    }
+    cerr << "tg0=" << h_tg[0] << endl;
+    for(int k=0; k < nfft3d; ++k) 
+      h_tg[k] *= h_masker[1][k];
+    d_tg = h_tg;
+
+    for(int k=0; k < 2*nfft3d; ++k) 
+      h_2tg[k] = h_tg[k/2];
+    d_2tg = h_2tg;
+  }
+  void defineMasks()
+  {
+    static const Real eps = 1.e-12;
+    d_masker[0] = thrust::device_vector<Real>(nfft3d);
+    d_masker[1] = thrust::device_vector<Real>(nfft3d);
+
+    h_masker[0] = thrust::host_vector<Real>(nfft3d);
+    h_masker[1] = thrust::host_vector<Real>(nfft3d);
+    
+    Real ggEcut= 2. * ecut;
+    Real ggWcut= 2. * wcut;
+    cerr << "ecut=" << ggEcut << endl;
+    cerr << "wcut=" << ggEcut << endl;
+
+    for(int k=0; k < nfft3d; k++) {
+      Real gg = G[0][k] * G[0][k] + G[1][k] * G[1][k] + G[2][k] * G[2][k];
+      Real gg0 = gg - ggEcut;
+      Real gg1 = gg - ggWcut;
+      h_masker[0][k] = ((gg0 < (-eps) ))? 1.0 : 0.0;
+      h_masker[1][k] = ((gg1 < (-eps) ))? 1.0 : 0.0;
+    }
+    d_masker[0] = h_masker[0];
+    d_masker[1] = h_masker[1];
+  }
+
+  void defineSummer()
+  {
+    h_summer[0] = thrust::host_vector<Real>(nfft3d);
+    h_summer[1] = thrust::host_vector<Real>(nfft3d);
+    
+    d_summer[0] = thrust::device_vector<Real>(nfft3d);
+    d_summer[1] = thrust::device_vector<Real>(nfft3d);
+    
+    for(int k=0; k < nfft3d; k++) h_summer[0][k] = h_summer[1][k] = 1.0;
+    for(int k3=(-nz/2+1); k3 <= (nz/2); ++k3)
+      for(int k2=(-ny/2+1); k2 <= (ny/2); ++k2)
+	for(int k1=1; k1 <= (nx/2); ++k1) {
+	  int i=k1; if(i<0) i += nx;
+	  int j=k2; if(j<0) j += ny;
+	  int k=k3; if(k<0) k += nz;
+	  int indx = i + j*(nx/2+1) + k*(nx/2+1)*ny;
+	  h_summer[0][indx] = h_summer[1][indx] = 2.0;
+	}
+    for(int k=0; k < nfft3d; ++k) {
+      h_summer[0][k] *= h_masker[0][k];
+      h_summer[1][k] *= h_masker[1][k];
+    }
+    d_summer[0] = h_summer[0];
+    d_summer[1] = h_summer[1];
+  }
+
+  CommonData(PsiHeader<Real>& psiHeader, RTDB& myrtdb) {
+    nz = psiHeader.get_nfft(2);
+    ny = psiHeader.get_nfft(1);
+    nx = psiHeader.get_nfft(0);
+    nfft3d = (nx/2+1) * ny *nz;
+    n2ft3d = 2*nfft3d;
+    Real *unita = psiHeader.get_unita_ptr();
+
+    cerr << "unita=" << endl
+         << unita[0] << " " << unita[3] << " " << unita[6] << endl
+         << unita[1] << " " << unita[4] << " " << unita[7] << endl
+         << unita[2] << " " << unita[5] << " " << unita[8] << endl;
+
+    // precompute the Tg array
+    precomputeUnitg(unita);
+
+
+    Real ecut0 = control_ecut();
+    Real wcut0 = control_wcut();
+    int nxh = nx/2;
+    int nyh = ny/2;
+    int nzh = nz/2;
+    Real gx = unitg[0] * ((Real) nxh);
+    Real gy = unitg[1] * ((Real) nyh);
+    Real gz = unitg[2] * ((Real) nzh);
+    Real gg1 = gx*gx + gy*gy + gz*gz;
+    gx = unitg[3] * ((Real) nxh);
+    gy = unitg[4] * ((Real) nyh);
+    gz = unitg[5] * ((Real) nzh);
+    Real gg2 = gx*gx + gy*gy + gz*gz;
+    gx = unitg[6] * ((Real) nxh);
+    gy = unitg[7] * ((Real) nyh);
+    gz = unitg[8] * ((Real) nzh);
+    Real gg3 = gx*gx + gy*gy + gz*gz;
+    Real gg = gg1;
+    if (gg2 < gg) gg = gg2;
+    if (gg3 < gg) gg = gg3;
+    ecut = 0.5*gg;
+    if (ecut0 < ecut) ecut = ecut0;
+    wcut = ecut;
+    if (wcut0 < wcut) wcut = wcut0;
+
+    cerr << "ecut=" << ecut << endl;
+
+    cerr << "unitg=" << endl
+         << unitg[0] << " " << unitg[3] << " " << unitg[6] << endl
+         << unitg[1] << " " << unitg[4] << " " << unitg[7] << endl
+         << unitg[2] << " " << unitg[5] << " " << unitg[8] << endl;
+
+    precomputeG();
+    // precompute mask array
+    defineMasks();
+    defineSummer();
+    precomputeTg();
+
+    Real dt = control_time_step();
+    dte = dt /sqrt(control_fake_mass());
+
+  }
+  ~CommonData() {
+    //delete d_masker[0]; delete h_masker[0];
+    //delete d_masker[1]; delete h_masker[1];
+    //delete d_summer[0]; delete h_summer[0];
+    //delete d_summer[1]; delete h_summer[1];
+  }
+
+};
+
+
+#endif
+

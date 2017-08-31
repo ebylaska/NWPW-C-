@@ -1,0 +1,60 @@
+NWChem filename ../eric.movecs size 5529736
+rtdb error get_info tag =cpsd:input_wavefunction_filename
+control_read: loop=1 1
+unita=
+30 0 0
+0 30 0
+0 0 30
+ecut=12.6331
+unitg=
+0.20944 0 0
+0 0.20944 0
+0 0 0.20944
+ecut=25.2662
+wcut=25.2662
+fourpi=12.5664
+C
+PseudoPotential filename ../eric.C.vpp
+C  atom 
+12 amass 
+4 nprj 
+ nfft3d=57600
+ vl =3.69561 -1142.22
+ vnl1 =1.49961 1.49566
+ vnl2 =0 -0
+ vnl3 =0 -0
+ vnl4 =0 -0.0342165
+npsp 1
+vnl[0][0] 1.49961
+---------- strfac_exi (Real *) -----------
+---------- strfac_exi (Real *) -----------
+---------- strfac_exi (Real *) -----------
+Initial Ke is 10.3055
+Norm check: cumulative sum 0.999896 0
+Norm check: cumulative sum 1.99971 1
+Norm check: cumulative sum 2.9995 2
+Norm check: cumulative sum 3.9993 3
+Norm check: cumulative sum 4.99874 4
+Norm check: cumulative sum 5.99802 5
+Initial norm is 5.99802
+inner_loop, it_in 1
+h_v_nonlocal took 0.0111985 wall seconds
+s11 0.999896 0.999912 0.999954 0.999954 0.999974 0.999977 
+Norm check: cumulative sum 0.999999 0
+Norm check: cumulative sum 1.9999 1
+Norm check: cumulative sum 2.99973 2
+Norm check: cumulative sum 3.99957 3
+Norm check: cumulative sum 4.99905 4
+Norm check: cumulative sum 5.99834 5
+h_v_nonlocal took 0.0112242 wall seconds
+Total energy        = 0
+Total orbital energy= -12.5614
+Hartree energy      = 15.0198
+exc-corr energy     = -3.89528
+ion-ion energy      = 0
+
+K.S. kinetic energy = 10.3055
+K.S. V_l energy     = -48.5939
+K.S. V_nl energy    = 0.852986
+K.S. V_Hart energy  = 30.0395
+K.S. V_xc energy    = -5.0957

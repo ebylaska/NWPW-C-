@@ -1,0 +1,2 @@
+ nvcc fftTest.cu -lcufft
+ ./a.out 16 16 16 2

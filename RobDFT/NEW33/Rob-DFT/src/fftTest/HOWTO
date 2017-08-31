@@ -1,0 +1,4 @@
+ nvcc -O3 fftTest.cu -lcufft -o fftTest_float
+ nvcc -D REAL=double -O3 fftTest.cu -lcufft -o fftTest_double
+ ./fftTest_double 48 48 48 10
+ ./fftTest_float 48 48 48 10

@@ -1,0 +1,2 @@
+rtdb error get_info tag =cpsd:input_wavefunction_filename
+control_read: loop=1 1
