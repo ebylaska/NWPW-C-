@@ -1,0 +1,21 @@
+#!/bin/csh
+
+# Job file - 
+#    This job file has been designed to work on voodoo.ucsd.edu
+#   and chewear1.
+
+set job = c2
+set old = 00
+set new = 00a
+
+cp tbsd.d   CONTROL
+cp $job.xyz$old IONIN
+
+rm -f IONOUT ORBOUT
+tbsd.x > MESSAGE
+
+mv MESSAGE $job.msg$new
+mv IONOUT  $job.xyz$new
+mv ORBOUT  $job.orb$new
+
+exit

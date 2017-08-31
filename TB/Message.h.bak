@@ -1,0 +1,30 @@
+#ifndef _MESSAGE_H_
+#define _MESSAGE_H_
+
+
+
+extern void Header_Message();
+extern void Input_Data_Message(const int,    const int,
+			       const double, const double,
+			       const int, char**, double**,
+			       const char*);
+extern void Output_Data_Message(const double, 
+                                const double, 
+                                const double,
+                                const int, char**, double**);
+
+extern void Start_Iteration_Message();
+extern void Iteration_Message(const int, const int, const double*);
+extern void End_Iteration_Message(const int);
+extern void Timing_Message(const double, const double,
+                           const double, const double,
+			   const double);
+extern void Start_Eigenvalue_Message(const int);
+extern void Eigenvalue_Message(const int, const int, const double);
+
+extern void ELEMENTS_Message(const int, char**, double**);
+extern void ATOMS_Message(const int, char**,double**);
+extern void ELC_Message(const int, const int, const int, char**, double**);
+extern void PARAMS_Message(const double, const double);
+
+#endif

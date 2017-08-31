@@ -1,0 +1,23 @@
+# Job file - 
+#    This job file has been designed to work on voodoo.ucsd.edu
+#   and chewear1.
+set job = c2
+set old = 00
+set new = 10
+
+
+cp tbmd.d   CONTROL
+cp $job.xyz$old   IONIN
+cp $job.vxyz$old VIONIN
+
+rm -f IONOUT ORBOUT
+tbmd.x > MESSAGE
+
+mv MESSAGE $job.msg$new
+mv IONOUT  $job.xyz$new
+mv VIONOUT $job.vxyz$new
+mv MOTION  $job.mov$new
+mv VMOTION $job.vmov$new
+mv ORBOUT  $job.orb$new
+
+exit
